@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -26,33 +27,44 @@ class AuthenticatedHttpClient extends http.BaseClient {
 }
 
 class XeduleAuthInAppBrowser extends InAppBrowser {
-  XeduleAuthInAppBrowser({required this.onAuthenticated});
+  XeduleAuthInAppBrowser({required this.onAuthenticated, this.onClosed});
 
+  bool _allowCloseCallback = false;
   late bool _hidden;
-  late InAppBrowserClassOptions options;
-  late Timer? unauthenticatedTimer = null;
+  late InAppBrowserClassOptions _options;
+  late Timer? _unauthenticatedTimer = null;
 
   final XeduleAuthCallback onAuthenticated;
+  final VoidCallback? onClosed;
 
   Future open({bool forceShow = false}) {
     this._hidden = !forceShow;
-
-    return this.openUrlRequest(
-      options: InAppBrowserClassOptions(
-        inAppWebViewGroupOptions: InAppWebViewGroupOptions(
-          crossPlatform: InAppWebViewOptions(
-            disableContextMenu: true,
-            javaScriptEnabled: true,
-            transparentBackground: true,
-          ),
-        ),
-        crossPlatform: InAppBrowserOptions(
-          hidden: _hidden,
-          hideToolbarTop: true,
+    this._options = InAppBrowserClassOptions(
+      inAppWebViewGroupOptions: InAppWebViewGroupOptions(
+        crossPlatform: InAppWebViewOptions(
+          disableContextMenu: true,
+          javaScriptEnabled: true,
+          transparentBackground: true,
         ),
       ),
+      crossPlatform: InAppBrowserOptions(
+        hidden: _hidden,
+        hideToolbarTop: true,
+      ),
+    );
+
+    return this.openUrlRequest(
+      options: _options,
       urlRequest: URLRequest(url: xeduleUri),
     );
+  }
+
+  @override
+  void onExit() {
+    if (_allowCloseCallback) {
+      this.onClosed!();
+    }
+    super.onCloseWindow();
   }
 
   @override
@@ -63,22 +75,27 @@ class XeduleAuthInAppBrowser extends InAppBrowser {
     }
 
     if (url.host == microsoftLoginUri.host && _hidden) {
-      unauthenticatedTimer = Timer(Duration(seconds: 1), () async {
+      _unauthenticatedTimer = Timer(Duration(seconds: 1), () async {
         _hidden = false;
 
-        final unhiddenOptions = options.copy();
+        final unhiddenOptions = _options.copy();
         unhiddenOptions.crossPlatform.hidden = _hidden;
 
+        _allowCloseCallback = false;
         await this.close();
+        _allowCloseCallback = true;
+
         await this.openUrlRequest(
           options: unhiddenOptions,
           urlRequest: URLRequest(url: xeduleUri),
         );
       });
     } else if (url.host == xeduleUri.host) {
-      if (unauthenticatedTimer != null) {
-        unauthenticatedTimer!.cancel();
+      if (_unauthenticatedTimer != null) {
+        _unauthenticatedTimer!.cancel();
       }
+
+      _allowCloseCallback = false;
       await this.close();
 
       CookieManager cookieManager = CookieManager.instance();
@@ -98,8 +115,8 @@ class XeduleRepository {
     this._xeduleApiClient = client;
   }
 
-  Future signIn({bool forceShow = false}) async {
-    Completer completer = Completer();
+  Future<bool> signIn({bool forceShow = false}) async {
+    Completer<bool> completer = Completer();
 
     final browser = XeduleAuthInAppBrowser(
       onAuthenticated: (cookies) {
@@ -108,8 +125,11 @@ class XeduleRepository {
             authCookies: cookies,
           ),
         );
-        completer.complete();
+        completer.complete(true);
       },
+      onClosed: () {
+        completer.complete(false);
+      }
     );
 
     await browser.open(forceShow: forceShow);

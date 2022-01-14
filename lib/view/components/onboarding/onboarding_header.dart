@@ -9,7 +9,7 @@ class OnboardingHeader extends StatelessWidget {
     required this.description,
   }) : super(key: key);
 
-  final SvgPicture image;
+  final SvgPicture? image;
   final String title;
   final String description;
 
@@ -17,7 +17,7 @@ class OnboardingHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        image,
+        image ?? const SizedBox.shrink(),
         const SizedBox(
           height: 25,
         ),

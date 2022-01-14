@@ -6,6 +6,7 @@ class OnboardingStore = _OnboardingStore with _$OnboardingStore;
 
 enum OnboardingState {
   logIn,
+  preSelectGroups,
   selectGroups,
   reviewGroups
 }

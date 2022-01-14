@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:han/stores/onboarding_store.dart';
 import 'package:han/view/components/onboarding/onboarding_state_login.dart';
+import 'package:han/view/components/onboarding/onboarding_state_pre_select_groups.dart';
 import 'package:han/view/components/onboarding/onboarding_state_select_groups.dart';
-import '../components/onboarding/onboarding_button.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -24,9 +22,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
     onboardingStore = OnboardingStore();
     onboardingStates = {
-      OnboardingState.logIn:
-          OnboardingStateLogin(onboardingStore: onboardingStore),
-      OnboardingState.selectGroups: const OnboardingStateSelectGroups(),
+      OnboardingState.logIn: OnboardingStateLogin(
+        onboardingStore: onboardingStore,
+      ),
+      OnboardingState.preSelectGroups: OnboardingStatePreSelectGroups(
+        onboardingStore: onboardingStore,
+      ),
+      OnboardingState.selectGroups: OnboardingStateSelectGroups(
+        onboardingStore: onboardingStore,
+      ),
     };
   }
 

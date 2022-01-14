@@ -29,7 +29,7 @@ class _OnboardingStateLoginState extends State<OnboardingStateLogin> {
       children: [
         OnboardingHeader(
           image: SvgPicture.asset(
-            'assets/onboarding/login_onboarding_header.svg',
+            'assets/onboarding/onboarding_login_header.svg',
           ),
           title: 'Welkom bij de onofficiële HAN app.',
           description:
@@ -44,13 +44,18 @@ class _OnboardingStateLoginState extends State<OnboardingStateLogin> {
                 _loading = !_loading;
               });
 
-              await xeduleStore.repository.signIn();
+              bool success = await xeduleStore.repository.signIn();
+              print(success);
 
               setState(() {
                 _loading = false;
               });
 
-              widget.onboardingStore.setState(OnboardingState.selectGroups);
+              if (success) {
+                widget.onboardingStore.setState(
+                  OnboardingState.preSelectGroups,
+                );
+              }
             },
             child: _loading
                 ? Transform.scale(

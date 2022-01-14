@@ -24,6 +24,9 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Lexend',
           primaryColor: const Color(0xFF7CA0FE),
           scaffoldBackgroundColor: const Color(0xFF191720),
+          colorScheme: const ColorScheme.dark(
+            primary: Color(0xFF7CA0FE),
+          )
         ),
         initialRoute: '/onboarding',
         routes: {
