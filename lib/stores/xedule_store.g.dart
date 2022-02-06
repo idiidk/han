@@ -48,13 +48,13 @@ mixin _$XeduleStore on _XeduleStore, Store {
       Atom(name: '_XeduleStore.fetchAppointmentsFuture');
 
   @override
-  ObservableFuture<List<Appointment>> get fetchAppointmentsFuture {
+  ObservableFuture<List<Appointment>>? get fetchAppointmentsFuture {
     _$fetchAppointmentsFutureAtom.reportRead();
     return super.fetchAppointmentsFuture;
   }
 
   @override
-  set fetchAppointmentsFuture(ObservableFuture<List<Appointment>> value) {
+  set fetchAppointmentsFuture(ObservableFuture<List<Appointment>>? value) {
     _$fetchAppointmentsFutureAtom
         .reportWrite(value, super.fetchAppointmentsFuture, () {
       super.fetchAppointmentsFuture = value;
@@ -65,13 +65,13 @@ mixin _$XeduleStore on _XeduleStore, Store {
       Atom(name: '_XeduleStore.fetchClassroomsFuture');
 
   @override
-  ObservableFuture<List<Classroom>> get fetchClassroomsFuture {
+  ObservableFuture<List<Classroom>>? get fetchClassroomsFuture {
     _$fetchClassroomsFutureAtom.reportRead();
     return super.fetchClassroomsFuture;
   }
 
   @override
-  set fetchClassroomsFuture(ObservableFuture<List<Classroom>> value) {
+  set fetchClassroomsFuture(ObservableFuture<List<Classroom>>? value) {
     _$fetchClassroomsFutureAtom.reportWrite(value, super.fetchClassroomsFuture,
         () {
       super.fetchClassroomsFuture = value;
@@ -81,13 +81,13 @@ mixin _$XeduleStore on _XeduleStore, Store {
   final _$fetchGroupsFutureAtom = Atom(name: '_XeduleStore.fetchGroupsFuture');
 
   @override
-  ObservableFuture<List<Group>> get fetchGroupsFuture {
+  ObservableFuture<List<Group>>? get fetchGroupsFuture {
     _$fetchGroupsFutureAtom.reportRead();
     return super.fetchGroupsFuture;
   }
 
   @override
-  set fetchGroupsFuture(ObservableFuture<List<Group>> value) {
+  set fetchGroupsFuture(ObservableFuture<List<Group>>? value) {
     _$fetchGroupsFutureAtom.reportWrite(value, super.fetchGroupsFuture, () {
       super.fetchGroupsFuture = value;
     });
@@ -97,7 +97,7 @@ mixin _$XeduleStore on _XeduleStore, Store {
       Atom(name: '_XeduleStore.fetchOrganisationalUnitsFuture');
 
   @override
-  ObservableFuture<List<OrganisationalUnit>>
+  ObservableFuture<List<OrganisationalUnit>>?
       get fetchOrganisationalUnitsFuture {
     _$fetchOrganisationalUnitsFutureAtom.reportRead();
     return super.fetchOrganisationalUnitsFuture;
@@ -105,7 +105,7 @@ mixin _$XeduleStore on _XeduleStore, Store {
 
   @override
   set fetchOrganisationalUnitsFuture(
-      ObservableFuture<List<OrganisationalUnit>> value) {
+      ObservableFuture<List<OrganisationalUnit>>? value) {
     _$fetchOrganisationalUnitsFutureAtom
         .reportWrite(value, super.fetchOrganisationalUnitsFuture, () {
       super.fetchOrganisationalUnitsFuture = value;
@@ -116,13 +116,13 @@ mixin _$XeduleStore on _XeduleStore, Store {
       Atom(name: '_XeduleStore.fetchTeachersFuture');
 
   @override
-  ObservableFuture<List<Teacher>> get fetchTeachersFuture {
+  ObservableFuture<List<Teacher>>? get fetchTeachersFuture {
     _$fetchTeachersFutureAtom.reportRead();
     return super.fetchTeachersFuture;
   }
 
   @override
-  set fetchTeachersFuture(ObservableFuture<List<Teacher>> value) {
+  set fetchTeachersFuture(ObservableFuture<List<Teacher>>? value) {
     _$fetchTeachersFutureAtom.reportWrite(value, super.fetchTeachersFuture, () {
       super.fetchTeachersFuture = value;
     });

@@ -14,66 +14,40 @@ class OrganisationalUnitNotFoundException implements Exception {}
 abstract class _XeduleStore with Store {
   final XeduleRepository repository = XeduleRepository();
 
-  // Empty values
-  static ObservableFuture<List<Appointment>> emptyAppointmentsResponse =
-      ObservableFuture.value([]);
-
-  static ObservableFuture<List<Classroom>> emptyClassroomsResponse =
-      ObservableFuture.value([]);
-
-  static ObservableFuture<List<Group>> emptyGroupsResponse =
-      ObservableFuture.value([]);
-
-  static ObservableFuture<List<OrganisationalUnit>>
-      emptyOrganisationalUnitsResponse = ObservableFuture.value([]);
-
-  static ObservableFuture<List<Teacher>> emptyTeachersResponse =
-      ObservableFuture.value([]);
-
   // Observables
   @observable
-  ObservableFuture<List<Appointment>> fetchAppointmentsFuture =
-      emptyAppointmentsResponse;
+  ObservableFuture<List<Appointment>>? fetchAppointmentsFuture;
 
   @observable
-  ObservableFuture<List<Classroom>> fetchClassroomsFuture =
-      emptyClassroomsResponse;
+  ObservableFuture<List<Classroom>>? fetchClassroomsFuture;
 
   @observable
-  ObservableFuture<List<Group>> fetchGroupsFuture = emptyGroupsResponse;
+  ObservableFuture<List<Group>>? fetchGroupsFuture;
 
   @observable
-  ObservableFuture<List<OrganisationalUnit>> fetchOrganisationalUnitsFuture =
-      emptyOrganisationalUnitsResponse;
+  ObservableFuture<List<OrganisationalUnit>>? fetchOrganisationalUnitsFuture;
 
   @observable
-  ObservableFuture<List<Teacher>> fetchTeachersFuture = emptyTeachersResponse;
+  ObservableFuture<List<Teacher>>? fetchTeachersFuture;
 
   // Computed
   @computed
   bool get hasAppointments =>
-      fetchAppointmentsFuture != emptyAppointmentsResponse &&
-      fetchAppointmentsFuture.status == FutureStatus.fulfilled;
+      fetchAppointmentsFuture?.status == FutureStatus.fulfilled;
 
   @computed
   bool get hasClassrooms =>
-      fetchClassroomsFuture != emptyClassroomsResponse &&
-      fetchClassroomsFuture.status == FutureStatus.fulfilled;
+      fetchClassroomsFuture?.status == FutureStatus.fulfilled;
 
   @computed
-  bool get hasGroups =>
-      fetchGroupsFuture != emptyGroupsResponse &&
-      fetchGroupsFuture.status == FutureStatus.fulfilled;
+  bool get hasGroups => fetchGroupsFuture?.status == FutureStatus.fulfilled;
 
   @computed
   bool get hasOrganisationalUnits =>
-      fetchOrganisationalUnitsFuture != emptyOrganisationalUnitsResponse &&
-      fetchOrganisationalUnitsFuture.status == FutureStatus.fulfilled;
+      fetchOrganisationalUnitsFuture?.status == FutureStatus.fulfilled;
 
   @computed
-  bool get hasTeachers =>
-      fetchTeachersFuture != emptyTeachersResponse &&
-      fetchTeachersFuture.status == FutureStatus.fulfilled;
+  bool get hasTeachers => fetchTeachersFuture?.status == FutureStatus.fulfilled;
 
   // Actions
   @action
@@ -128,7 +102,7 @@ abstract class _XeduleStore with Store {
     // Construct a list of schedule id's to request
     for (final group in groups) {
       for (final organisationalUnitId in group.organisationalUnitIds) {
-        final organisationalUnit = fetchOrganisationalUnitsFuture.value
+        final organisationalUnit = fetchOrganisationalUnitsFuture!.value
             ?.firstWhere((ou) => ou.id == organisationalUnitId.toString());
 
         if (organisationalUnit == null) {

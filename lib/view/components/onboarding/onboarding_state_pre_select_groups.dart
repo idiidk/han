@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:han/stores/onboarding_store.dart';
 import 'package:han/view/components/onboarding/onboarding_button.dart';
+import 'package:provider/provider.dart';
 
 import 'onboarding_header.dart';
 
 class OnboardingStatePreSelectGroups extends StatelessWidget {
   const OnboardingStatePreSelectGroups({
     Key? key,
-    required this.onboardingStore,
   }) : super(key: key);
-
-  final OnboardingStore onboardingStore;
 
   @override
   Widget build(BuildContext context) {
+    final onboardingStore = Provider.of<OnboardingStore>(context);
+
     return Column(
       children: [
         OnboardingHeader(

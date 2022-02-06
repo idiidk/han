@@ -9,10 +9,7 @@ import 'onboarding_button.dart';
 class OnboardingStateLogin extends StatefulWidget {
   const OnboardingStateLogin({
     Key? key,
-    required this.onboardingStore,
   }) : super(key: key);
-
-  final OnboardingStore onboardingStore;
 
   @override
   State<OnboardingStateLogin> createState() => _OnboardingStateLoginState();
@@ -24,6 +21,7 @@ class _OnboardingStateLoginState extends State<OnboardingStateLogin> {
   @override
   Widget build(BuildContext context) {
     final xeduleStore = Provider.of<XeduleStore>(context);
+    final onboardingStore = Provider.of<OnboardingStore>(context);
 
     return Column(
       children: [
@@ -41,18 +39,17 @@ class _OnboardingStateLoginState extends State<OnboardingStateLogin> {
           child: OnboardingButton(
             onPressed: () async {
               setState(() {
-                _loading = !_loading;
+                _loading = true;
               });
 
               bool success = await xeduleStore.repository.signIn();
-              print(success);
 
               setState(() {
                 _loading = false;
               });
 
               if (success) {
-                widget.onboardingStore.setState(
+                onboardingStore.setState(
                   OnboardingState.preSelectGroups,
                 );
               }

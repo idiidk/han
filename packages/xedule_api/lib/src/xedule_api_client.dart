@@ -41,7 +41,7 @@ class XeduleApiClient {
     }
 
     final appointmentsRequest =
-        Uri.https(_baseUrl, '/schedule', queryParameters);
+        Uri.https(_baseUrl, '/api/schedule', queryParameters);
     final appointmentsResponse = await _httpClient.get(appointmentsRequest);
 
     if (appointmentsResponse.statusCode != 200) {
@@ -60,7 +60,7 @@ class XeduleApiClient {
   }
 
   Future<List<Classroom>> getClassrooms() async {
-    final classroomsRequest = Uri.https(_baseUrl, '/classroom');
+    final classroomsRequest = Uri.https(_baseUrl, '/api/classroom');
     final classroomsResponse = await _httpClient.get(classroomsRequest);
 
     if (classroomsResponse.statusCode != 200) {
@@ -81,7 +81,7 @@ class XeduleApiClient {
   }
 
   Future<List<Group>> getGroups() async {
-    final groupsRequest = Uri.https(_baseUrl, '/group');
+    final groupsRequest = Uri.https(_baseUrl, '/api/group');
     final groupsResponse = await _httpClient.get(groupsRequest);
 
     if (groupsResponse.statusCode != 200) {
@@ -103,7 +103,7 @@ class XeduleApiClient {
 
   Future<List<OrganisationalUnit>> getOrganisationalUnits() async {
     final organisationalUnitsRequest =
-        Uri.https(_baseUrl, '/organisationalUnit');
+        Uri.https(_baseUrl, '/api/organisationalUnit');
     final organisationalUnitsResponse =
         await _httpClient.get(organisationalUnitsRequest);
 
@@ -126,7 +126,7 @@ class XeduleApiClient {
   }
 
   Future<List<Teacher>> getTeachers() async {
-    final teachersRequest = Uri.https(_baseUrl, '/docent');
+    final teachersRequest = Uri.https(_baseUrl, '/api/docent');
     final teachersResponse = await _httpClient.get(teachersRequest);
 
     if (teachersResponse.statusCode != 200) {

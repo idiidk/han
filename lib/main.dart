@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:han/stores/onboarding_store.dart';
 import 'package:han/stores/xedule_store.dart';
 import 'package:han/view/pages/home_page.dart';
 import 'package:han/view/pages/onboarding_page.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<XeduleStore>(create: (_) => XeduleStore()),
+        Provider<OnboardingStore>(create: (_) => OnboardingStore()),
       ],
       child: MaterialApp(
         title: 'Han',
